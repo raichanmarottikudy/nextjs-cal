@@ -1,101 +1,81 @@
-import Image from "next/image";
+'use client'
+
+import { useState } from "react";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const[result,setResult]= useState('')
+  const handleClick =(value)=>{
+    if (value === '=') {
+      try {
+          setResult(eval(result) || '');
+      } catch (error) {
+          setResult('Error');
+      }
+  } else if (value === 'C') {
+      setResult('');
+  } else if (value === 'CE') {
+      setResult(result.slice(0, -1));
+  } else {
+      setResult(result + value);
+  }
+};
+  
+   
+    return (
+      <div className="flex min-h-screen flex-col items-center  p-24">
+        <h1 className="text-4xl">Calculator</h1>
+        <div className="bg-white p-6 rounded-lg shadow-lg text-black">
+          <input type="text" className="w-full mb-2 border-gray-400 focus:outline-none text-4xl" value={result} readOnly/>
+          <div className="grid grid-cols-4 gap-2 border-grey-400">
+          <button onClick={() =>
+                          handleClick('7')} className="bg-stone-100 text-2xl">7</button>
+                      <button onClick={() =>
+                          handleClick('8')} className="bg-stone-100 text-2xl">8</button>
+                      <button onClick={() =>
+                          handleClick('9')} className="bg-stone-100 text-2xl">9</button>
+                      <button className="operator bg-stone-100 text-2xl" onClick={() =>
+                          handleClick('CE')}>CE</button>
+  
+  
+                      <button onClick={() => 
+                          handleClick('4')} className="bg-stone-100 text-2xl">4</button>
+                      <button onClick={() => 
+                          handleClick('5')} className="bg-stone-100 text-2xl">5</button>
+                      <button onClick={() => 
+                          handleClick('6')} className="bg-stone-100 text-2xl">6</button>
+                      <button className="operator bg-stone-100 text-2xl" onClick={() => 
+                          handleClick('/')}>/</button>
+  
+  
+                      <button onClick={() => 
+                          handleClick('1')} className="bg-stone-100 text-2xl">1</button>
+                      <button onClick={() => 
+                          handleClick('2')} className="bg-stone-100 text-2xl">2</button>
+                      <button onClick={() => 
+                          handleClick('3')} className="bg-stone-100 text-2xl">3</button>
+                      <button className="operator bg-stone-100 text-2xl" onClick={() => 
+                          handleClick('*')}>*</button>
+  
+  
+                      <button onClick={() => 
+                          handleClick('0')} className="bg-stone-100 text-2xl">0</button>
+                      <button onClick={() => 
+                          handleClick('.')} className="bg-stone-100 text-2xl">.</button>
+                      <button onClick={() => 
+                          handleClick('00')} className="bg-stone-100 text-2xl">00</button>
+  
+                      <button className="operator bg-stone-100 text-2xl" onClick={() => 
+                          handleClick('-')} >-</button>
+                      <button className="operator wide bg-stone-100 text-2xl" id='clear' onClick={() => 
+                          handleClick('C')}>C</button>
+  
+                      <button className="operator bg-stone-100 text-2xl" onClick={() => 
+                          handleClick('=')}>=</button>
+  
+                      <button className="operator bg-stone-100 text-2xl col-span-2" onClick={() => 
+                          handleClick('+')}>+</button>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </div>
   );
 }
